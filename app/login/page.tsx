@@ -11,10 +11,16 @@ const Login = () => {
     setSubmitting: (isSubmitting: boolean) => void,
     values: loginSchema
   ) => {
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 2000);
-    console.log("values: ", values);
+    fetch("/api/auth")
+      .then((res) => res.json())
+      .then((data) => {
+        setSubmitting(false);
+        console.log("data: ", data);
+        console.log("values: ", values);
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
   };
 
   return (
