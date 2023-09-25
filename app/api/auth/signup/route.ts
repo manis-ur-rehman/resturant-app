@@ -1,7 +1,6 @@
-import { timeMoke } from "@/utils";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  await timeMoke(3000);
-  return NextResponse.json("api signup route", { status: 200 });
+export async function POST(req: Request) {
+  const body = await req.json();
+  return NextResponse.json(body, { status: 200 });
 }

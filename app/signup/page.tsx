@@ -12,17 +12,30 @@ import Link from "next/link";
 import AuthLayout from "@components/authlayout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@signup/loading";
 
 const SignUp = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
-  const handleSignUp = (
+  const handleSignUp = async (
     setSubmitting: (isSubmitting: boolean) => void,
     values: signupSchema
   ) => {
-    setTimeout(() => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/signup", requestOptions);
+      const data = await res.json();
+      router.push("/login");
+    } catch (error) {
+    } finally {
       setSubmitting(false);
-    }, 2000);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     (function () {
@@ -40,6 +53,9 @@ const SignUp = () => {
         });
     })();
   }, []);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <AuthLayout title="Sign Up" description="If you have already an account? ">
       <Formik

@@ -21,14 +21,14 @@ const AuthLayout = ({
           <Link
             href={
               title === "Sign Up"
-                ? "/signup"
-                : title === "Login"
                 ? "/login"
+                : title === "Login"
+                ? "/signup"
                 : "#"
             }
             className="font-medium text-blue-600 hover:underline"
           >
-            {title}
+            {title === "Sign Up" ? "Login" : title === "Login" ? "Sign Up" : ""}
           </Link>
         </p>
       </div>

@@ -11,22 +11,25 @@ import Loading from "@login/loading";
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
-  const handleLogin = (
+  const handleLogin = async (
     setSubmitting: (isSubmitting: boolean) => void,
     values: loginSchema
   ) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
     setLoading(true);
-    fetch("/api/auth/login")
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data);
-        setSubmitting(false);
-        setLoading(false);
-        router.push("/dashboard");
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
+    try {
+      const res = await fetch("/api/auth/login", requestOptions);
+      const data = await res.json();
+      router.push("/dashboard");
+    } catch (error) {
+    } finally {
+      setSubmitting(false);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
