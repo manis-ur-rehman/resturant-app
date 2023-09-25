@@ -19,8 +19,6 @@ const Login = () => {
     fetch("/api/auth/login")
       .then((res) => res.json())
       .then((data) => {
-        console.log("data: ", data);
-        console.log("values: ", values);
         alert(data);
         setSubmitting(false);
         setLoading(false);

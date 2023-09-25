@@ -23,7 +23,6 @@ const SignUp = () => {
     setTimeout(() => {
       setSubmitting(false);
     }, 2000);
-    console.log("values: ", values);
   };
   useEffect(() => {
     (function () {

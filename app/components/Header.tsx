@@ -8,13 +8,10 @@ const Header = () => {
     fetch("/api/auth/logout")
       .then((res) => res.json())
       .then((data) => {
-        console.log("data: ", data);
         alert(data);
         router.push("/login");
       })
-      .catch((err) => {
-        console.log("error: ", err);
-      });
+      .catch((err) => {});
   };
   return (
     <div className="bg-red-200 absolute h-20 w-full flex justify-between items-center p-5">
