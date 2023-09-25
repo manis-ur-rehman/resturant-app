@@ -1,7 +1,7 @@
 import SignUp from "@signup/page";
 import Login from "@login/page";
-import SideNavBar from "@components/SideNavBar";
-import Header from "@components/Header";
+import SideNavBar from "@/app/components/sidenavbar";
+import Header from "@/app/components/header";
 import Layout from "@components/layout";
 
 export default function Home() {

@@ -1,6 +1,6 @@
-import SideNavBar from "@components/SideNavBar";
-import Header from "@components/Header";
-import Footer from "@components/Footer";
+import SideNavBar from "@/app/components/sidenavbar";
+import Header from "@/app/components/header";
+import Footer from "@/app/components/footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
