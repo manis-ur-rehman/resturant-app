@@ -1,28 +1,55 @@
 "use client";
-import Link from "next/link";
 import { Formik, Form } from "formik";
+import { useRouter } from "next/navigation";
 import { loginSchema, loginValues, validationSchema } from "@login/validation";
 import Input from "@components/input";
 import Button from "@components/button";
 import AuthLayout from "@components/authlayout";
+import { useEffect, useState } from "react";
+import Loading from "@login/loading";
 
 const Login = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
   const handleLogin = (
     setSubmitting: (isSubmitting: boolean) => void,
     values: loginSchema
   ) => {
-    fetch("/api/auth")
+    setLoading(true);
+    fetch("/api/auth/login")
       .then((res) => res.json())
       .then((data) => {
-        setSubmitting(false);
         console.log("data: ", data);
         console.log("values: ", values);
+        alert(data);
+        setSubmitting(false);
+        setLoading(false);
+        router.push("/dashboard");
       })
       .catch((err) => {
-        console.log("Error: ", err);
+        setLoading(false);
       });
   };
 
+  useEffect(() => {
+    (function () {
+      setLoading(true);
+      fetch("/api/auth")
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          if (data.authStatus) {
+            router.push("/dashboard");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+    })();
+  }, []);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <AuthLayout title="Login" description="Don't have an account? ">
       <Formik

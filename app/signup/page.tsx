@@ -10,8 +10,12 @@ import Input from "@components/input";
 import Button from "@components/button";
 import Link from "next/link";
 import AuthLayout from "@components/authlayout";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
   const handleSignUp = (
     setSubmitting: (isSubmitting: boolean) => void,
     values: signupSchema
@@ -21,6 +25,22 @@ const SignUp = () => {
     }, 2000);
     console.log("values: ", values);
   };
+  useEffect(() => {
+    (function () {
+      setLoading(true);
+      fetch("/api/auth")
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          if (data.authStatus) {
+            router.push("/dashboard");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+    })();
+  }, []);
   return (
     <AuthLayout title="Sign Up" description="If you have already an account? ">
       <Formik
