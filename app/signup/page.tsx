@@ -43,9 +43,10 @@ const SignUp = () => {
       fetch("/api/auth")
         .then((res) => res.json())
         .then((data) => {
-          setLoading(false);
           if (data.authStatus) {
             router.push("/dashboard");
+          } else {
+            setLoading(false);
           }
         })
         .catch((err) => {

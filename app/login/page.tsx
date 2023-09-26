@@ -7,10 +7,11 @@ import Button from "@components/button";
 import AuthLayout from "@components/authlayout";
 import { useEffect, useState } from "react";
 import Loading from "@login/loading";
+import UseAuthCheckHook from "@/app/hooks/useauthcheckhook";
 
 const Login = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loading, setLoading } = UseAuthCheckHook();
   const handleLogin = async (
     setSubmitting: (isSubmitting: boolean) => void,
     values: loginSchema
@@ -32,22 +33,6 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    (function () {
-      setLoading(true);
-      fetch("/api/auth")
-        .then((res) => res.json())
-        .then((data) => {
-          setLoading(false);
-          if (data.authStatus) {
-            router.push("/dashboard");
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-        });
-    })();
-  }, []);
   if (loading) {
     return <Loading />;
   }
