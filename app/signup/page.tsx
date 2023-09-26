@@ -3,7 +3,7 @@
 import { Form, Formik } from "formik";
 import {
   signUpValues,
-  signupSchema,
+  SignupSchema,
   validationSchema,
 } from "@signup/validation";
 import Input from "@components/Input";
@@ -15,10 +15,10 @@ import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 
 const SignUp = () => {
   const router = useRouter();
-  const { loading, setLoading } = UseAuthCheckHook();
+  const { loading, setLoading } = UseAuthCheckHook({ statusReturn: false });
   const handleSignUp = async (
     setSubmitting: (isSubmitting: boolean) => void,
-    values: signupSchema
+    values: SignupSchema
   ) => {
     const requestOptions = {
       method: "POST",

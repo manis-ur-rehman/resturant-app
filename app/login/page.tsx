@@ -1,7 +1,7 @@
 "use client";
 import { Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
-import { loginSchema, loginValues, validationSchema } from "@login/validation";
+import { LoginSchema, loginValues, validationSchema } from "@login/validation";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import AuthLayout from "@components/AuthLayout";
@@ -10,10 +10,10 @@ import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 
 const Login = () => {
   const router = useRouter();
-  const { loading, setLoading } = UseAuthCheckHook();
+  const { loading, setLoading } = UseAuthCheckHook({ statusReturn: false });
   const handleLogin = async (
     setSubmitting: (isSubmitting: boolean) => void,
-    values: loginSchema
+    values: LoginSchema
   ) => {
     const requestOptions = {
       method: "POST",

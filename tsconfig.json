@@ -23,6 +23,7 @@
       "@components/*": ["./app/components/*"],
       "@login/*": ["./app/login/*"],
       "@signup/*": ["./app/signup/*"],
+      "@profile/*": ["./app/profile/*"],
       "@dashboard/*": ["./app/dashboard/*"],
       "@hooks/*": ["./app/hooks/*"]
     }

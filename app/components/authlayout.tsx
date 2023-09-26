@@ -6,7 +6,7 @@ const AuthLayout = ({
   description,
 }: {
   children: React.ReactNode;
-  title: "Login" | "Sign Up";
+  title: "Login" | "Sign Up" | "Profile";
   description: string;
 }) => {
   return (

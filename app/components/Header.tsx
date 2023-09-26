@@ -17,13 +17,22 @@ const Header = () => {
       setLoading(false);
     }
   };
+  const goToProfile = () => {
+    router.push("/profile");
+  };
   if (loading) {
     return <Loading />;
   }
   return (
     <div className="bg-gradient-to-r from-cyan-500 to-blue-500 absolute h-20 w-full flex justify-between items-center p-5">
       <h1 className="font-bold text-xl text-center">Restaurant Application</h1>
-      <div>
+      <div className="flex gap-5">
+        <button
+          className="bg-transparent hover:bg-blue-500 text-black-700 font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded"
+          onClick={goToProfile}
+        >
+          Profile
+        </button>
         <button
           className="bg-transparent hover:bg-blue-500 text-black-700 font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded"
           onClick={handleLogout}

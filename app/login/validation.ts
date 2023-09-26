@@ -7,9 +7,9 @@ export const validationSchema = Yup.object().shape({
     .min(6, "Password is too short - should be 6 chars minimum"),
 });
 
-export interface loginSchema {
+export interface LoginSchema {
   email: string;
   password: string;
 }
 
-export const loginValues: loginSchema = { email: "", password: "" };
+export const loginValues: LoginSchema = { email: "", password: "" };
