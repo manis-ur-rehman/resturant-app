@@ -1,8 +1,8 @@
 import { StorageType } from "@/globaltypes";
-import Layout from "@components/layout";
+import Layout from "@components/Layout";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import RestaurantCard from "@components/restaurantcard";
+import RestaurantCard from "@components/RestaurantCard";
 
 const Dashboard = () => {
   const cookieStore = cookies();

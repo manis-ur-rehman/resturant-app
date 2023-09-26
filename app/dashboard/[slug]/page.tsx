@@ -1,7 +1,7 @@
-import Title from "@components/title";
-import Images from "@components/images";
-import Layout from "@components/layout";
-import Rating from "@components/rating";
+import Title from "@components/Title";
+import Images from "@components/Images";
+import Layout from "@components/Layout";
+import Rating from "@components/Rating";
 
 export default function Page({ params }: { params: { slug: string } }) {
   return (

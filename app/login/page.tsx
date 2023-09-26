@@ -2,11 +2,11 @@
 import { Formik, Form } from "formik";
 import { useRouter } from "next/navigation";
 import { loginSchema, loginValues, validationSchema } from "@login/validation";
-import Input from "@components/input";
-import Button from "@components/button";
-import AuthLayout from "@components/authlayout";
+import Input from "@components/Input";
+import Button from "@components/Button";
+import AuthLayout from "@components/AuthLayout";
 import Loading from "@/app/loading";
-import UseAuthCheckHook from "@/app/hooks/useauthcheckhook";
+import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 
 const Login = () => {
   const router = useRouter();

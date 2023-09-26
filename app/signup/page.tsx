@@ -6,12 +6,12 @@ import {
   signupSchema,
   validationSchema,
 } from "@signup/validation";
-import Input from "@components/input";
-import Button from "@components/button";
-import AuthLayout from "@components/authlayout";
+import Input from "@components/Input";
+import Button from "@components/Button";
+import AuthLayout from "@components/AuthLayout";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
-import UseAuthCheckHook from "@hooks/useauthcheckhook";
+import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 
 const SignUp = () => {
   const router = useRouter();
