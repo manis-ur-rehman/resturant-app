@@ -8,15 +8,14 @@ import {
 } from "@signup/validation";
 import Input from "@components/input";
 import Button from "@components/button";
-import Link from "next/link";
 import AuthLayout from "@components/authlayout";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@signup/loading";
+import Loading from "@/app/loading";
+import UseAuthCheckHook from "@hooks/useauthcheckhook";
 
 const SignUp = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loading, setLoading } = UseAuthCheckHook();
   const handleSignUp = async (
     setSubmitting: (isSubmitting: boolean) => void,
     values: signupSchema
@@ -37,23 +36,6 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    (function () {
-      setLoading(true);
-      fetch("/api/auth")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.authStatus) {
-            router.push("/dashboard");
-          } else {
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-        });
-    })();
-  }, []);
   if (loading) {
     return <Loading />;
   }

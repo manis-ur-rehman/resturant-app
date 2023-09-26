@@ -5,8 +5,7 @@ import { loginSchema, loginValues, validationSchema } from "@login/validation";
 import Input from "@components/input";
 import Button from "@components/button";
 import AuthLayout from "@components/authlayout";
-import { useEffect, useState } from "react";
-import Loading from "@login/loading";
+import Loading from "@/app/loading";
 import UseAuthCheckHook from "@/app/hooks/useauthcheckhook";
 
 const Login = () => {

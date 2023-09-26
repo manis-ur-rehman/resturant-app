@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Loading from "@components/loading";
+import Loading from "@/app/loading";
 
 const Header = () => {
   const router = useRouter();
