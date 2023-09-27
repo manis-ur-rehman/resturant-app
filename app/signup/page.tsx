@@ -27,7 +27,10 @@ const SignUp = () => {
       if (data) {
         router.push("/login");
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.message);
+      }
     } finally {
       setSubmitting(false);
       setLoading(false);
