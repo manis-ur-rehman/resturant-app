@@ -11,6 +11,7 @@ import Button from "@components/Button";
 import AuthLayout from "@components/AuthLayout";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
+import axios from "axios";
 import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 
 const SignUp = () => {
@@ -20,16 +21,12 @@ const SignUp = () => {
     setSubmitting: (isSubmitting: boolean) => void,
     values: SignupSchema
   ) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    };
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/signup", requestOptions);
-      const data = await res.json();
-      router.push("/login");
+      const { data } = await axios.post("/api/auth/signup", values);
+      if (data) {
+        router.push("/login");
+      }
     } catch (error) {
     } finally {
       setSubmitting(false);
