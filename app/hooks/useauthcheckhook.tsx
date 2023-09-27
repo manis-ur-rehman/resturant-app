@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 const UseAuthCheckHook = ({ statusReturn }: { statusReturn: boolean }) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
+  const [token, setToken] = useState<string>("");
   useEffect(() => {
     (function () {
       setLoading(true);
@@ -12,12 +13,14 @@ const UseAuthCheckHook = ({ statusReturn }: { statusReturn: boolean }) => {
         .then((data) => {
           if (statusReturn) {
             if (data.authStatus) {
+              setToken(data.getToken);
               setLoading(false);
             } else {
               router.push("/login");
             }
           } else {
             if (data.authStatus) {
+              setToken(data.getToken);
               router.push("/dashboard");
             } else {
               setLoading(false);
@@ -32,6 +35,7 @@ const UseAuthCheckHook = ({ statusReturn }: { statusReturn: boolean }) => {
   return {
     loading,
     setLoading,
+    token,
   };
 };
 

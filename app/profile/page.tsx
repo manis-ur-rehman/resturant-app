@@ -12,9 +12,11 @@ import Input from "@components/Input";
 import Button from "@components/Button";
 import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
 import Loading from "@/app/loading";
+import axios from "axios";
+import { HeadersKeys } from "@/globaltypes";
 
 const Profile = () => {
-  const { loading } = UseAuthCheckHook({ statusReturn: true });
+  const { loading, token } = UseAuthCheckHook({ statusReturn: true });
   const formikRef = useRef<FormikProps<any>>(null);
   const handleProfileUpdate = (
     setSubmitting: (isSubmitting: boolean) => void,
@@ -24,10 +26,25 @@ const Profile = () => {
     setSubmitting(false);
   };
   useEffect(() => {
-    formikRef.current?.setFieldValue("firstName", "anees");
-    formikRef.current?.setFieldValue("lastName", "awan");
-    formikRef.current?.setFieldValue("email", "abc@gmail.com");
-  }, [loading]);
+    if (token) {
+      (async function () {
+        try {
+          const { data } = await axios.get("/api/auth/user", {
+            headers: { [HeadersKeys.TOKEN]: token },
+          });
+          if (data) {
+            formikRef.current?.setFieldValue("firstName", data.user.firstName);
+            formikRef.current?.setFieldValue("lastName", data.user.lastName);
+            formikRef.current?.setFieldValue("email", data.user.email);
+          }
+        } catch (error: any) {
+          if (error.response) {
+            alert(error.response.data.message);
+          }
+        }
+      })();
+    }
+  }, [loading, token]);
   if (loading) {
     return <Loading />;
   }

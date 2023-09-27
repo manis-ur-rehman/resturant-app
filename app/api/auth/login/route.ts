@@ -25,8 +25,8 @@ export async function POST(req: Request) {
         lastName: user.lastName,
         email: user.email,
       };
-      let token = jwt.sign(payload, "secret", {
-        expiresIn: 1440,
+      let token = jwt.sign(payload, StorageType.SECRET, {
+        expiresIn: 8440,
       });
       cookieStore.set(StorageType.TOKEN, token);
       return NextResponse.json(body, { status: 200 });

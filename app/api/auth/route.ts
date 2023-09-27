@@ -6,7 +6,16 @@ import { NextResponse } from "next/server";
 export async function GET(req: any, res: any) {
   const cookieStore = cookies();
   if (cookieStore.get(StorageType.TOKEN)) {
-    return NextResponse.json({ authStatus: true }, { status: 200 });
+    return NextResponse.json(
+      {
+        authStatus: true,
+        getToken: cookieStore.get(StorageType.TOKEN)?.value,
+      },
+      { status: 200 }
+    );
   }
-  return NextResponse.json({ authStatus: false }, { status: 200 });
+  return NextResponse.json(
+    { authStatus: false, getToken: "" },
+    { status: 200 }
+  );
 }
