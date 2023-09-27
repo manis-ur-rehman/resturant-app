@@ -7,6 +7,7 @@ import Button from "@components/Button";
 import AuthLayout from "@components/AuthLayout";
 import Loading from "@/app/loading";
 import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
+import axios from "axios";
 
 const Login = () => {
   const router = useRouter();
@@ -15,17 +16,16 @@ const Login = () => {
     setSubmitting: (isSubmitting: boolean) => void,
     values: LoginSchema
   ) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    };
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/login", requestOptions);
-      const data = await res.json();
-      router.push("/dashboard");
-    } catch (error) {
+      const { data } = await axios.post("/api/auth/login", values);
+      if (data) {
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.message);
+      }
     } finally {
       setSubmitting(false);
       setLoading(false);
