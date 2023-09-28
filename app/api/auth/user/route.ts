@@ -16,11 +16,34 @@ export async function GET(req: Request) {
   });
 
   if (user) {
-    return NextResponse.json({ user }, { status: 200 });
+    const { password, ...restOfUser } = user;
+    return NextResponse.json(restOfUser, { status: 200 });
   } else {
     return NextResponse.json(
       { message: "user does not exist" },
       { status: 400 }
     );
+  }
+}
+
+export async function PUT(req: Request) {
+  const body = await req.json();
+
+  const { firstName, lastName, id }: any = body;
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    });
+    const { password, ...restOfUser } = user;
+
+    return NextResponse.json(restOfUser, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "something wrong" }, { status: 400 });
   }
 }

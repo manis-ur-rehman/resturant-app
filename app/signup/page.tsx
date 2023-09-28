@@ -28,7 +28,7 @@ const SignUp = () => {
         router.push("/login");
       }
     } catch (error: any) {
-      if (error.response) {
+      if (error?.response?.data?.message) {
         alert(error.response.data.message);
       }
     } finally {

@@ -7,7 +7,7 @@ import {
   profileValues,
   ProfileSchema,
 } from "@profile/validation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import UseAuthCheckHook from "@hooks/UseAuthCheckHook";
@@ -16,35 +16,59 @@ import axios from "axios";
 import { HeadersKeys } from "@/globaltypes";
 
 const Profile = () => {
-  const { loading, token } = UseAuthCheckHook({ statusReturn: true });
+  const { loading, token, setLoading } = UseAuthCheckHook({
+    statusReturn: true,
+  });
+  const [id, setId] = useState();
   const formikRef = useRef<FormikProps<any>>(null);
-  const handleProfileUpdate = (
+  const handleProfileUpdate = async (
     setSubmitting: (isSubmitting: boolean) => void,
     values: ProfileSchema
   ) => {
-    console.log("values: ", values);
-    setSubmitting(false);
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      id: id,
+    };
+    setLoading(true);
+    try {
+      const { data } = await axios.put("/api/auth/user", payload);
+      if (data) {
+        getUserData();
+      }
+    } catch (error: any) {
+      if (error?.response?.data?.message) {
+        alert(error.response.data.message);
+      }
+    } finally {
+      setSubmitting(false);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     if (token) {
-      (async function () {
-        try {
-          const { data } = await axios.get("/api/auth/user", {
-            headers: { [HeadersKeys.TOKEN]: token },
-          });
-          if (data) {
-            formikRef.current?.setFieldValue("firstName", data.user.firstName);
-            formikRef.current?.setFieldValue("lastName", data.user.lastName);
-            formikRef.current?.setFieldValue("email", data.user.email);
-          }
-        } catch (error: any) {
-          if (error.response) {
-            alert(error.response.data.message);
-          }
-        }
-      })();
+      getUserData();
     }
-  }, [loading, token]);
+  }, [token]);
+
+  async function getUserData() {
+    try {
+      const { data } = await axios.get("/api/auth/user", {
+        headers: { [HeadersKeys.TOKEN]: token },
+      });
+      if (data) {
+        setId(data.id);
+        formikRef.current?.setFieldValue("firstName", data.firstName);
+        formikRef.current?.setFieldValue("lastName", data.lastName);
+        formikRef.current?.setFieldValue("email", data.email);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.message);
+      }
+    }
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -60,7 +84,7 @@ const Profile = () => {
       >
         {({ isSubmitting }: FormikProps<ProfileSchema>) => (
           <Form className="mt-6">
-            <Input type="email" name="email" label="Email" />
+            <Input type="email" name="email" label="Email" disabled={true} />
             <Input type="text" name="firstName" label="First Name" />
             <Input type="text" name="lastName" label="Last Name" />
             <Button

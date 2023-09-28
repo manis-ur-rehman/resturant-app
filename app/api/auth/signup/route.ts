@@ -28,7 +28,8 @@ export async function POST(req: Request) {
       const user = await prisma.user.create({
         data: userData,
       });
-      return NextResponse.json(user, { status: 201 });
+      const { password, ...restOfUser } = user;
+      return NextResponse.json(restOfUser, { status: 201 });
     } catch (error) {
       return NextResponse.json(
         { message: "Something went wrong" },

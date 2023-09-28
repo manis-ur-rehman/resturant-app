@@ -19,13 +19,8 @@ export async function POST(req: Request) {
   });
   if (user) {
     if (bcript.compareSync(password, user.password)) {
-      const payload = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-      };
-      let token = jwt.sign(payload, StorageType.SECRET, {
+      const { password, ...restOfUser } = user;
+      let token = jwt.sign(restOfUser, StorageType.SECRET, {
         expiresIn: 8440,
       });
       cookieStore.set(StorageType.TOKEN, token);

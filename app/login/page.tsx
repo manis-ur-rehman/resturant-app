@@ -23,7 +23,7 @@ const Login = () => {
         router.push("/dashboard");
       }
     } catch (error: any) {
-      if (error.response) {
+      if (error?.response?.data?.message) {
         alert(error.response.data.message);
       }
     } finally {
