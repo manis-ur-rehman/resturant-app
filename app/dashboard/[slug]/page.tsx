@@ -7,19 +7,23 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const fetchRestaurantItems = async (productId: number) => {
-  const restaurantItems = await prisma.items.findFirst({
-    where: {
-      product_id: productId,
-    },
-    select: {
-      id: true,
-      title: true,
-      images: true,
-      description: true,
-      product_id: true,
-    },
-  });
-  return restaurantItems;
+  try {
+    const restaurantItems = await prisma.items.findFirst({
+      where: {
+        product_id: productId,
+      },
+      select: {
+        id: true,
+        title: true,
+        images: true,
+        description: true,
+        product_id: true,
+      },
+    });
+    return restaurantItems;
+  } catch (error) {
+    return null;
+  }
 };
 
 export default async function Page({ params }: { params: { slug: string } }) {
